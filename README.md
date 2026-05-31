@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="web/assets/calorie%20logo%20transparent.png" width="120" height="120" alt="Fud AI Logo">
+  <img width="204" height="204" alt="pink" src="https://github.com/user-attachments/assets/6d85fdc0-946b-47f1-a48b-6553eb71a678" />
 </p>
 
-<h1 align="center">Fud AI</h1>
+<h1 align="center">Calstra AI</h1>
 
 <p align="center">
   <strong>Eat Smart, Live Better</strong><br>
