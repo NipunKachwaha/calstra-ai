@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calstra AI App — AI Calorie Tracker &amp; Food Scanner for iPhone and Android</title>
+<meta name="description" content="Calstra AI is a free open-source AI calorie tracker and food scanner for iPhone and Android. Log meals by photo, barcode, notes, voice, text, or manual entry; track macros, fiber, sugar, body fat, and Health sync.">
+<meta name="keywords" content="Calstra AI, Calstra app, Calstra AI app, AI Calstra, calorie tracker, AI calorie tracker, AI food scanner, barcode calorie tracker, Open Food Facts, photo calorie tracker, nutrition tracker, macro tracker, body fat tracker, body composition, photo note food log, optional nutrient goals, custom nutrient cards, open source, iPhone, iOS, Android, privacy, BYOK, Gemini, OpenAI, Claude, Grok, Groq, Deepgram, Hugging Face, Fireworks AI, DeepInfra, Mistral, Ollama, Gemma, Llama Vision, Qwen VL, Pixtral, widgets, AI coach, speech-to-text language, Apple Health,
+Health Connect, weight tracker,
+TDEE calculator,
+15 languages">
+<link rel="canonical" href="https://www.calstra-ai.app/">
+<meta name="theme-color" content="#FF375F">
+<!-- Open Graph (Facebook · WhatsApp · LinkedIn · iMessage · Discord · Slack) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Calstra AI">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://www.calstra-ai.app/">
+<meta property="og:title" content="Calstra AI App — AI Calorie Tracker &amp; Food Scanner">
+<meta property="og:description" content="Log meals by photo, notes, voice, text, or manual entry. Track macros, detailed nutrients, body fat, and Health sync without a Calstra AI account.">
+<meta property="og:image" content="https://www.calstra-ai.app/assets/og-preview.png?v=5">
+<meta property="og:image:secure_url" content="https://www.calstra-ai.app/assets/og-preview.png?v=5">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Calstra AI — AI calorie tracker for iOS and Android. Snap, speak, or type your meal.">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@apoorvdarshan">
+<meta name="twitter:creator" content="@apoorvdarshan">
+<meta name="twitter:url" content="https://www.calstra-ai.app/">
+<meta name="twitter:title" content="Calstra AI App — AI Calorie Tracker &amp; Food Scanner">
+<meta name="twitter:description" content="Log meals by photo, notes, voice, text, or manual entry. Track macros, detailed nutrients, body fat, and Health sync without a Calstra AI account.">
+<meta name="twitter:image" content="https://www.calstra-ai.app/assets/og-preview.png?v=5">
+<meta name="twitter:image:alt" content="Calstra AI — AI calorie tracker for iOS and Android. Snap, speak, or type your meal.">
+<link rel="icon" href="assets/calorie logo transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="styles.css?v=20260512a">
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Fud AI",
+  "alternateName": ["Fud AI App", "Fud app", "AI Fud", "Fud calorie tracker"],
+  "operatingSystem": "iOS, Android",
+  "applicationCategory": "HealthApplication",
+  "applicationSubCategory": "AI calorie tracker",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free, open-source AI-powered calorie and nutrition tracker for iOS and Android. Snap a photo of food, scan a packaged-food barcode, add a note to camera or photo-library meals, speak your meal, or type it. Body fat tracking with goal + history graph alongside weight on the Progress tab. Multi-turn AI Coach with on-demand tool calling — Coach can fetch any date range of weight, body-fat, food, or calorie history (\"what was my weight in March?\", \"what did I eat Tuesday?\") and uses current date/timezone plus richer meal details for better answers. Supports 13 AI providers including Google Gemini, OpenAI GPT-5, Anthropic Claude (Sonnet 4.6, Opus 4.7, Haiku 4.5), xAI Grok, Groq, Together AI, OpenRouter, Hugging Face (open-weight Gemma, Qwen VL, Llama Vision), Fireworks AI, DeepInfra, Mistral (Pixtral), Ollama for local inference, and any custom OpenAI-compatible endpoint. iOS also offers optional Fud AI Plus for no-key Gemini food analysis, Deepgram voice transcription, and Coach access with weekly, monthly, or yearly plans and separate daily limits. Barcode lookup uses Open Food Facts when public product nutrition is available. Smart serving units can show slices, pieces, cups, ml, or other visible units while grams remain the source of truth. Food log sorting can keep the default grouped order or sort sections by latest logging order from the Home screen. Custom Home nutrient cards can show macros or selected detailed nutrients, and optional nutrient goals for fiber, sugar, saturated fat, cholesterol, sodium, and potassium can be set manually or estimated with AI without changing calorie/protein/carbs/fat formulas. Smart daily reminders for weight + body fat logging skip on days already logged. Home Screen and Lock Screen widgets on iOS (5 families); Calorie + Protein Glance widgets on Android. Theme color personalization changes the app accent and matching iOS app icon / Android launcher icon. 6 speech-to-text options (Native iOS / Native Android, Gemini Audio, OpenAI Whisper, Groq, Deepgram, AssemblyAI) with per-provider language selection; Plus voice is capped at 60 seconds. App-update checks open the App Store or Play Store when a newer version is available. 15 languages with system auto-selection on both platforms. Tracks 13 nutrients per meal including calories, protein, carbs, fat, sugar, fiber, saturated fat, monounsaturated fat, polyunsaturated fat, cholesterol, sodium, and potassium. Personalized TDEE and BMR calculation using Katch-McArdle (with body-fat input) and Mifflin-St Jeor formulas — toggle which one is active in Settings. Apple Health (iOS) and Health Connect (Android) bidirectional sync for body measurements and per-meal nutrition, including a one-shot historical backfill on first enable that pulls years of past weight + body-fat scale data into the Progress chart (iOS). Privacy-first with no Fud AI account, no cloud sync, no ads, and no in-app tracking. API keys stored in iOS Keychain (iOS) or EncryptedSharedPreferences with AES-256 (Android). Delete All Data is local-only and never touches Apple Health or Health Connect. MIT licensed open source. Built with SwiftUI (iOS) and Jetpack Compose (Android).",
+  "keywords": "Fud AI, Fud app, AI calorie tracker, AI food scanner, photo calorie tracker, macro tracker, nutrition tracker, body fat tracker, iPhone calorie tracker, Android calorie tracker",
+  "featureList": [
+    "AI food scanner from camera or photo library",
+    "Barcode lookup for packaged foods using Open Food Facts",
+    "Meal notes with photos",
+    "Voice, text, nutrition label, saved meal, and manual logging",
+    "Macro and detailed nutrient tracking",
+    "Optional goals for fiber, sugar, saturated fat, cholesterol, sodium, and potassium",
+    "Body weight and body fat progress tracking",
+    "Apple Health and Health Connect sync",
+    "Bring Your Own Key AI providers plus optional Fud AI Plus on iOS",
+    "Open source and privacy-first local storage"
+  ],
+  "author": { "@type": "Person", "name": "Apoorv Darshan" },
+  "url": "https://www.fud-ai.app/",
+  "sameAs": [
+    "https://github.com/apoorvdarshan/fud-ai",
+    "https://x.com/apoorvdarshan",
+    "https://www.instagram.com/fudai.app/",
+    "https://www.linkedin.com/company/fud-ai-app",
+    "https://trustmrr.com/startup/fud-ai-calorie-tracker"
+  ],
+  "downloadUrl": [
+    "https://apps.apple.com/us/app/fud-ai-calorie-tracker/id6758935726",
+    "https://play.google.com/store/apps/details?id=com.apoorvdarshan.calorietracker"
+  ],
+  "installUrl": [
+    "https://apps.apple.com/us/app/fud-ai-calorie-tracker/id6758935726",
+    "https://play.google.com/store/apps/details?id=com.apoorvdarshan.calorietracker"
+  ],
+  "screenshot": "https://www.fud-ai.app/assets/screenshots/home.png",
+  "softwareVersion": "iOS 3.5 / Android 1.2",
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "5", "ratingCount": "1" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Fud AI",
+  "alternateName": ["Fud AI App", "Fud app", "AI Fud"],
+  "url": "https://www.fud-ai.app/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Apoorv Darshan"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "Fud AI"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Fud AI the same as the Fud app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Fud AI, Fud AI app, and Fud app refer to the same open-source calorie tracker for iPhone and Android."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can Fud AI scan food from photos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Fud AI can estimate nutrition from camera photos, photo-library images, image notes, nutrition labels, text input, voice input, saved meals, and manual entries."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Fud AI track macros and other nutrients?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It tracks calories, protein, carbs, fat, sugar, fiber, saturated fat, mono-unsaturated fat, poly-unsaturated fat, cholesterol, sodium, potassium, and added sugar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use Fud AI without an API key?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bring Your Own Key mode is always available. On iOS, optional Fud AI Plus adds no-key Gemini food analysis, Deepgram speech transcription, and Coach access with daily limits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Fud AI sync with Apple Health or Health Connect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Fud AI supports Apple Health on iPhone and Health Connect on Android for body measurements and meal nutrition when you explicitly enable sync."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Fud AI private and open source?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Fud AI is MIT-licensed open source, has no Fud AI account requirement, and stores app data locally unless you explicitly send a meal, voice, or coach request to your selected AI provider."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ========== NAVIGATION ========== -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="nav-brand">
+      <img src="assets/calorie logo transparent.png" alt="Calstra AI Logo">
+      <span>Calstra&nbsp;AI</span>
+    </a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true">
+    <label for="nav-toggle" class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </label>
+    <div class="nav-links">
+      <a href="#chapters">Features</a>
+      <a href="#process">Process</a>
+      <a href="#plates">Plates</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noopener">GitHub</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <header class="hero-meta">
+      <span><span class="dot"></span> Issue 03 · 2026</span>
+      <span>Open Source · MIT</span>
+      <span>iOS 17.6+ · Android 8.0+</span>
+    </header>
+
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-title">Calstra AI app,<br><em>calorie tracker</em>.</h1>
+
+        <p class="hero-lede">
+          <span class="dropcap">T</span>he Calstra AI app is a free, open-source AI calorie tracker and food scanner for iPhone and Android. Snap a photo, scan a packaged-food barcode, add a note to camera or library meals, speak your meal, or type it — bring your own AI provider, or use optional Calstra AI Plus on iOS with no API setup. Track weight and body fat together, customize Home nutrient cards, set optional detailed nutrient goals, and let AI suggest those goals without changing the core calorie and macro calculator.
+        </p>
+
+        <div class="cta-group">
+          <a href="https://apps.apple.com/us/app/calstra-ai-calorie-tracker/id6758935726" class="app-store-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2
+            <span>Download on the App Store</span>
+          </a>
+          <!-- TODO: once Closed Testing graduates to Production, revert this back to a plain anchor pointing at the Play Store URL and delete the data-open-beta hook + the #beta-modal block at the bottom of this file. The href stays as a no-JS fallback so users without JS still land on the Play Store listing. -->
+          <a href="https://play.google.com/store/apps/details?id=com.apoorvdarshan.calorietracker" class="play-store-btn" data-open-beta aria-haspopup="dialog" aria-controls="beta-modal">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.998.998 0 0 1-.61-.92V2.734c0-.39.222-.732.61-.92zM14.91 13.117l2.605 2.605-12.232 6.86 9.627-9.465zm3.978-3.205l2.74 1.535c.733.41.733 1.475 0 1.886l-2.741 1.536-2.969-2.969 2.97-2.988zM5.282 1.349l12.232 6.86-2.605 2.605L5.282 1.35z"/></svg>
+            <span>Join Android beta</span>
+          </a>
+        </div>
+        <div class="cta-sub">
+          <a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noopener" class="chip-btn chip-github" aria-label="Star on GitHub">
+            <i class="fa-brands fa-github"></i><span>Star · GitHub</span>
+          </a>
+          <a href="https://www.producthunt.com/products/fud-ai-calorie-tracker" target="_blank" rel="noopener" class="chip-btn chip-ph" aria-label="Vote on Product Hunt">
+            <i class="fa-brands fa-product-hunt"></i><span>Vote · PH</span>
+          </a>
+          <a href="https://www.linkedin.com/company/fud-ai-app" target="_blank" rel="noopener" class="chip-btn chip-linkedin" aria-label="Follow on LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span>
+          </a>
+          <a href="https://trustmrr.com/startup/fud-ai-calorie-tracker" target="_blank" rel="noopener" class="chip-btn chip-trustmrr" aria-label="View Fud AI on TrustMRR">
+            <i class="fa-solid fa-star"></i><span>TrustMRR</span>
+          </a>
+          <a href="https://www.instagram.com/fudai.app/" target="_blank" rel="noopener" class="chip-btn chip-instagram" aria-label="Follow on Instagram">
+            <i class="fa-brands fa-instagram"></i><span>Instagram</span>
+          </a>
+          <a href="https://ko-fi.com/apoorvdarshan" target="_blank" rel="noopener" class="chip-btn chip-kofi" aria-label="Support on Ko-fi">
+            <i class="fa-solid fa-mug-hot"></i><span>Ko-fi</span>
+          </a>
+          <a href="https://x.com/apoorvdarshan" target="_blank" rel="noopener" class="chip-btn chip-x" aria-label="Follow on X">
+            <i class="fa-brands fa-x-twitter"></i><span>Follow</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-frame">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <img src="assets/screenshots/home.png" alt="Fud AI Home — calorie ring and macro bars">
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EDITORIAL TICKER ========== -->
+<div class="ticker-section">
+  <div class="ticker">
+    <span class="ticker-item"><span class="ast">✦</span> AI Food Recognition</span>
+    <span class="ticker-item"><span class="ast">✦</span> Barcode Lookup</span>
+    <span class="ticker-item"><span class="ast">✦</span> 13 Nutrients Tracked</span>
+    <span class="ticker-item"><span class="ast">✦</span> Voice Input · 6 STT Options</span>
+    <span class="ticker-item"><span class="ast">✦</span> Theme Colors · Matching Icons</span>
+    <span class="ticker-item"><span class="ast">✦</span> 13 LLM Providers</span>
+    <span class="ticker-item"><span class="ast">✦</span> AI Coach Chat</span>
+    <span class="ticker-item"><span class="ast">✦</span> Smart Serving Units</span>
+    <span class="ticker-item"><span class="ast">✦</span> Apple Health · Health Connect</span>
+    <span class="ticker-item"><span class="ast">✦</span> 15 Languages</span>
+    <span class="ticker-item"><span class="ast">✦</span> iOS + Android</span>
+    <span class="ticker-item"><span class="ast">✦</span> Open Source · MIT</span>
+    <span class="ticker-item"><span class="ast">✦</span> Bring Your Own Key</span>
+    <!-- Duplicate set for seamless scroll -->
+    <span class="ticker-item"><span class="ast">✦</span> AI Food Recognition</span>
+    <span class="ticker-item"><span class="ast">✦</span> 13 Nutrients Tracked</span>
+    <span class="ticker-item"><span class="ast">✦</span> Voice Input · 6 STT Options</span>
+    <span class="ticker-item"><span class="ast">✦</span> Theme Colors · Matching Icons</span>
+    <span class="ticker-item"><span class="ast">✦</span> 13 LLM Providers</span>
+    <span class="ticker-item"><span class="ast">✦</span> AI Coach Chat</span>
+    <span class="ticker-item"><span class="ast">✦</span> Smart Serving Units</span>
+    <span class="ticker-item"><span class="ast">✦</span> Apple Health · Health Connect</span>
+    <span class="ticker-item"><span class="ast">✦</span> 15 Languages</span>
+    <span class="ticker-item"><span class="ast">✦</span> iOS + Android</span>
+    <span class="ticker-item"><span class="ast">✦</span> Open Source · MIT</span>
+    <span class="ticker-item"><span class="ast">✦</span> Bring Your Own Key</span>
+  </div>
+</div>
+
+<!-- ========== BY THE NUMBERS ========== -->
+<section class="stats-section">
+  <div class="container">
+    <span class="eyebrow"><span class="num">§ 01</span> &nbsp; By the Numbers</span>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">13</div>
+        <div class="stat-label">Nutrients tracked per meal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">13</div>
+        <div class="stat-label">AI providers supported</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Languages, auto-localized</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">On-device storage</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURES — CHAPTERS ========== -->
+<section id="chapters">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow"><span class="num">§ 02</span> &nbsp; Chapters</span>
+      <h2>What it does, <em>chapter by chapter</em>.</h2>
+    </header>
+
+    <div class="chapters">
+
+      <article class="chapter">
+        <div class="chapter-num">01</div>
+        <header class="chapter-head">
+          <h3>Capture a meal.</h3>
+          <span class="chapter-tag">Photo · Barcode · Note · Voice · Text · Manual</span>
+        </header>
+        <div class="chapter-body">
+          <p>Snap a photo of any meal, scan a packaged-food barcode, add a note to a camera or photo-library image, scan a nutrition label, speak your lunch hands-free, type it, or enter macros manually when you already know them.</p>
+          <ul>
+            <li>Native camera + photo library import on both platforms, with optional notes for extra meal context</li>
+            <li>Barcode lookup on iOS and Android uses Open Food Facts when public packaged-food data is available</li>
+            <li>Voice input via 6 speech-to-text options with per-provider language selection</li>
+            <li>Smart serving units show slices, pieces, cups, ml, or similar units when the AI can infer them</li>
+            <li>Text and manual fallbacks for quick logging</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">02</div>
+        <header class="chapter-head">
+          <h3>AI does the math.</h3>
+          <span class="chapter-tag">13 LLM providers</span>
+        </header>
+        <div class="chapter-body">
+          <p>Bring your own key, or use optional Fud AI Plus on iOS for no-key Gemini food analysis, Deepgram voice transcription, and Coach access. BYOK lets you choose from Gemini, OpenAI, Anthropic Claude, Grok, OpenRouter, Together AI, Groq, Hugging Face, Fireworks, DeepInfra, Mistral, Ollama (local), or any custom OpenAI-compatible endpoint. On Android, Coach can also include camera or photo-library image attachments.</p>
+          <ul>
+            <li>Open-weight vision models out of the box: Gemma, Llama Vision, Qwen VL, Pixtral</li>
+            <li>OpenRouter testable on $0 credits — the <code>openrouter/free</code> default routes to a free vision model so you can try the integration without funding the account</li>
+            <li><strong>Custom AI Instructions</strong> — optional Settings text appended to every AI request. Drop your region, diet, or brand context once instead of repeating it per meal ("I live in Germany, prefer ALDI/REWE brands" or "I'm on a bodybuilding cut")</li>
+            <li><strong>Fallback Provider</strong> — opt-in second provider that auto-retries when your primary fails on overload, rate limit, or network error. Pair a paid model with a free fallback for cheap reliability</li>
+            <li>API keys stored in iOS Keychain (iOS) or EncryptedSharedPreferences with AES-256 (Android) — never transmitted to us</li>
+            <li>Switch providers and models anytime; transient overloads (503 / 429 / 529) auto-retry with backoff, and AI responses with surrounding prose or markdown fences are parsed reliably</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">03</div>
+        <header class="chapter-head">
+          <h3>Track 13 nutrients.</h3>
+          <span class="chapter-tag">Macros + micros</span>
+        </header>
+        <div class="chapter-body">
+          <p>Calories, protein, carbs, fat, sugar, fiber, saturated fat, mono-unsaturated fat, poly-unsaturated fat, cholesterol, sodium, potassium, and added sugar — adjustable serving sizes and AI-suggested units recalculate every logged entry live.</p>
+          <ul>
+            <li>Personalized BMR + TDEE via Katch-McArdle / Mifflin-St Jeor</li>
+            <li>Auto daily targets, fully overridable, with per-macro pin / auto-balance</li>
+            <li>Optional nutrient goals for fiber, sugar, saturated fat, cholesterol, sodium, and potassium stay separate from calorie/protein/carbs/fat math</li>
+            <li>Home cards can show macros or selected detailed nutrients</li>
+            <li>Browse past days with the date strip; configurable week start and optional latest-first food log sorting</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">04</div>
+        <header class="chapter-head">
+          <h3>Talk to your Coach.</h3>
+          <span class="chapter-tag">Multi-turn AI chat</span>
+        </header>
+        <div class="chapter-body">
+          <p>A dedicated tab where the AI sees your full profile, weight history, food log, current date/timezone, richer meal details, and a thermodynamic forecast. Ask <em>"what's my expected weight in 30 days?"</em> or <em>"am I eating enough protein?"</em> and get answers grounded in your own data.</p>
+          <ul>
+            <li>Memory persists locally across sessions</li>
+            <li>Goal-aware prompt chips for Lose / Gain / Maintain</li>
+            <li>Long-press any reply to copy</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">05</div>
+        <header class="chapter-head">
+          <h3>Glance from anywhere.</h3>
+          <span class="chapter-tag">Home Screen + Lock Screen widgets</span>
+        </header>
+        <div class="chapter-body">
+          <p>iOS ships five widget families across Home Screen and Lock Screen — circular, rectangular, inline, small, medium — with both Calorie and Protein widgets. Android ships Calorie and Protein Glance widgets in two sizes each (small + medium). All update the moment you log a meal.</p>
+          <ul>
+            <li>Pink-gradient calorie ring with macro progress at a glance</li>
+            <li>Above-the-clock circular and below-the-clock rectangular on iOS Lock Screen</li>
+            <li>Auto-roll over at midnight without opening the app</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">06</div>
+        <header class="chapter-head">
+          <h3>Sync with Apple Health &amp; Health Connect.</h3>
+          <span class="chapter-tag">Bidirectional · iOS + Android</span>
+        </header>
+        <div class="chapter-body">
+          <p>iOS writes 12 nutrition types per meal plus body measurements (weight, height, body fat) to Apple Health and reads weight, height, body fat, date of birth, and sex back into your profile. Android does the same through Health Connect — also pulling in external weight samples from Samsung Health, Fitbit, Withings, and any other Health Connect–compatible app.</p>
+          <ul>
+            <li>Background observers for real-time bi-sync</li>
+            <li>UUID-tagged samples for safe per-entry deletion (no orphans)</li>
+            <li>Delete All Data is local-only — Apple Health / Health Connect data is never touched</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">07</div>
+        <header class="chapter-head">
+          <h3>Speaks fifteen languages.</h3>
+          <span class="chapter-tag">Auto-localized</span>
+        </header>
+        <div class="chapter-body">
+          <p>English, Arabic, Azerbaijani, Chinese (Simplified), Dutch, French, German, Hindi, Italian, Japanese, Korean, Portuguese (Brazil), Romanian, Russian, Spanish — auto-selected by your phone's system language on both iOS and Android. Voice input can also be guided separately per STT provider.</p>
+        </div>
+      </article>
+
+      <article class="chapter">
+        <div class="chapter-num">08</div>
+        <header class="chapter-head">
+          <h3>Make it yours.</h3>
+          <span class="chapter-tag">Theme colors + matching icons</span>
+        </header>
+        <div class="chapter-body">
+          <p>Choose Fud Pink, red, orange, green, mint, teal, blue, or purple in Settings. The accent color updates across tabs, buttons, rings, charts, and the iOS app icon / Android launcher icon.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS — PROCESS ========== -->
+<section id="process">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow"><span class="num">§ 03</span> &nbsp; Process</span>
+      <h2>From photo to log <em>in seconds</em>.</h2>
+    </header>
+
+    <div class="process">
+      <div></div>
+      <div class="process-list">
+        <div class="process-step">
+          <div class="process-num">Step 01</div>
+          <div class="process-text">
+            <h3><em>Capture</em></h3>
+            <p>Snap a photo, add a note, scan a label, pick from library, type, or speak your food details.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">Step 02</div>
+          <div class="process-text">
+            <h3><em>Analyze</em></h3>
+            <p>Your chosen AI provider identifies the food and estimates the full nutrition profile.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">Step 03</div>
+          <div class="process-text">
+            <h3><em>Review</em></h3>
+            <p>Edit the name, adjust grams or a visible unit like slices/pieces/ml, confirm meal type. You stay in control of every entry.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">Step 04</div>
+          <div class="process-text">
+            <h3><em>Log</em></h3>
+            <p>Saved locally on your device. Synced to Apple Health or Health Connect if enabled. Widgets update instantly.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-num">Step 05</div>
+          <div class="process-text">
+            <h3><em>Track</em></h3>
+            <p>Dashboard, charts, and Coach context update in real time across the app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SCREENSHOTS — PLATES ========== -->
+<section class="plates-section" id="plates">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow"><span class="num">§ 04</span> &nbsp; Plates</span>
+      <h2>A few <em>plates</em> from the deck.</h2>
+    </header>
+  </div>
+  <div class="plates">
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/home.png" alt="Home dashboard"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;01</span><span>Home · Dashboard</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/logging.png" alt="Logging options menu with camera, photos, notes, text, voice, manual, and saved meals"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;02</span><span>Log · Options</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/snap.png" alt="Snap food"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;03</span><span>Snap · Capture</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/review.png" alt="Review food entry"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;04</span><span>Review · Edit</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/meals.png" alt="Meals log"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;05</span><span>Meals · Log</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/coach.png" alt="AI Coach chat"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;06</span><span>Coach · AI Chat</span></figcaption>
+    </figure>
+    <figure class="plate">
+      <div class="phone-frame"><div class="phone-screen"><img src="assets/screenshots/progress.png" alt="Progress charts"></div></div>
+      <figcaption class="plate-caption"><span class="num">PLATE&nbsp;07</span><span>Progress · Charts</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <span class="eyebrow">Coda</span>
+      <h2>Start <em>tracking</em> today.</h2>
+      <p>Free, open source, privacy first. Bring your own AI key or use optional Fud AI Plus on iOS — no Fud AI account, no cloud sync, no in-app tracking. Available on iOS and Android with photo notes, barcode logging, and customizable nutrient goals.</p>
+      <div class="cta-group">
+        <a href="https://apps.apple.com/us/app/fud-ai-calorie-tracker/id6758935726" class="app-store-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span>Download on the App Store</span>
+        </a>
+        <!-- TODO: once Closed Testing graduates to Production, revert this back to a plain anchor pointing at the Play Store URL and delete the data-open-beta hook + the #beta-modal block at the bottom of this file. The href stays as a no-JS fallback so users without JS still land on the Play Store listing. -->
+        <a href="https://play.google.com/store/apps/details?id=com.apoorvdarshan.calorietracker" class="play-store-btn" data-open-beta aria-haspopup="dialog" aria-controls="beta-modal">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.998.998 0 0 1-.61-.92V2.734c0-.39.222-.732.61-.92zM14.91 13.117l2.605 2.605-12.232 6.86 9.627-9.465zm3.978-3.205l2.74 1.535c.733.41.733 1.475 0 1.886l-2.741 1.536-2.969-2.969 2.97-2.988zM5.282 1.349l12.232 6.86-2.605 2.605L5.282 1.35z"/></svg>
+          <span>Join Android beta</span>
+        </a>
+      </div>
+      <div class="cta-sub">
+        <a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noopener" class="chip-btn chip-github"><i class="fa-brands fa-github"></i><span>Star · GitHub</span></a>
+        <a href="https://www.producthunt.com/products/fud-ai-calorie-tracker" target="_blank" rel="noopener" class="chip-btn chip-ph"><i class="fa-brands fa-product-hunt"></i><span>Vote · PH</span></a>
+        <a href="https://www.linkedin.com/company/fud-ai-app" target="_blank" rel="noopener" class="chip-btn chip-linkedin"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
+        <a href="https://trustmrr.com/startup/fud-ai-calorie-tracker" target="_blank" rel="noopener" class="chip-btn chip-trustmrr"><i class="fa-solid fa-star"></i><span>TrustMRR</span></a>
+        <a href="https://www.instagram.com/fudai.app/" target="_blank" rel="noopener" class="chip-btn chip-instagram"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+        <a href="https://ko-fi.com/apoorvdarshan" target="_blank" rel="noopener" class="chip-btn chip-kofi"><i class="fa-solid fa-mug-hot"></i><span>Ko-fi</span></a>
+        <a href="https://x.com/apoorvdarshan" target="_blank" rel="noopener" class="chip-btn chip-x"><i class="fa-brands fa-x-twitter"></i><span>Follow</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow"><span class="num">§ 05</span> &nbsp; FAQ</span>
+      <h2>Fud AI app, <em>plainly answered</em>.</h2>
+    </header>
+    <div class="faq-grid">
+      <article class="faq-item">
+        <h3>Is Fud AI the Fud app?</h3>
+        <p>Yes. Fud AI, Fud AI app, Fud app, and AI Fud all point to the same open-source calorie tracker for iPhone and Android.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Can it work as an AI food scanner?</h3>
+        <p>Yes. Log food from camera photos, barcode lookup, photo-library images, photos with notes, nutrition labels, voice, text, saved meals, or manual entry.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Does it replace a macro tracker?</h3>
+        <p>It tracks calories, protein, carbs, and fat, plus detailed nutrients like fiber, sugar, saturated fat, cholesterol, sodium, potassium, mono-fat, poly-fat, and added sugar.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Can I use it without an API key?</h3>
+        <p>Bring Your Own Key is always available. On iOS, optional Fud AI Plus adds no-key Gemini food analysis, Deepgram speech transcription, and Coach access with daily limits.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Does it sync with Health apps?</h3>
+        <p>Yes. Fud AI supports Apple Health on iPhone and Health Connect on Android for body measurements and meal nutrition when you explicitly enable sync.</p>
+      </article>
+      <article class="faq-item">
+        <h3>Is it private and open source?</h3>
+        <p>Yes. There is no Fud AI account, no cloud sync, no in-app tracking, and no ads. The MIT-licensed source code is available on GitHub.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="footer-brand-mark">
+          <img src="assets/calorie logo transparent.png" alt="Fud AI">
+          <span>Fud AI</span>
+        </a>
+        <p>An open-source iOS and Android calorie tracker that puts you in charge of the AI, the data, and the device. Designed and built by Apoorv Darshan.</p>
+        <div class="footer-socials">
+          <a href="mailto:apoorv@fud-ai.app" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://x.com/apoorvdarshan" target="_blank" rel="noopener" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/fudai.app/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/fud-ai-app" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://trustmrr.com/startup/fud-ai-calorie-tracker" target="_blank" rel="noopener" aria-label="TrustMRR"><i class="fa-solid fa-star"></i></a>
+          <a href="https://ko-fi.com/apoorvdarshan" target="_blank" rel="noopener" aria-label="Ko-fi"><i class="fa-solid fa-mug-hot"></i></a>
+          <a href="https://www.producthunt.com/products/fud-ai-calorie-tracker" target="_blank" rel="noopener" aria-label="Product Hunt"><i class="fa-brands fa-product-hunt"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Read</h4>
+        <ul>
+          <li><a href="#chapters">Features</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#plates">Screenshots</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Build</h4>
+        <ul>
+          <li><a href="https://github.com/apoorvdarshan/fud-ai" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/apoorvdarshan/fud-ai/issues/new?labels=bug&amp;title=Bug:%20" target="_blank" rel="noopener">Report Issue</a></li>
+          <li><a href="https://github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&amp;title=Feature:%20" target="_blank" rel="noopener">Request Feature</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="https://github.com/apoorvdarshan/fud-ai/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Apoorv Darshan · Set in Fraunces &amp; Manrope</span>
+      <span>Volume 03 · No. 01</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav: add scrolled border on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+  // Close mobile menu on link click
+  const navToggle = document.getElementById('nav-toggle');
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => { if (navToggle) navToggle.checked = false; });
+  });
+</script>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
+<!--
+  ANDROID CLOSED-BETA MODAL
+  -------------------------
+  Shown when the "Join Android beta" CTA is clicked. Walks the visitor
+  through the 3-step Play Store closed-test opt-in (group join → opt-in
+  page → install). Pure HTML+CSS+vanilla JS, no framework, no build step.
+
+  Hidden by default via the [hidden] attribute. The trigger anchors keep
+  their direct Play Store href as a no-JS fallback — visitors with JS
+  disabled bypass the modal and land straight on the Play Store listing
+  (which only works for opted-in group members anyway, but at least it
+  fails informatively rather than silently doing nothing).
+
+  Remove this whole block (and the data-open-beta attribute on the two
+  triggers) once Closed Testing graduates to Production.
+-->
+<div class="beta-modal" id="beta-modal" hidden role="dialog" aria-modal="true" aria-labelledby="beta-modal-title">
+  <div class="beta-modal__backdrop" data-close-beta></div>
+  <div class="beta-modal__panel" role="document">
+    <button type="button" class="beta-modal__close" data-close-beta aria-label="Close">&times;</button>
+    <p class="beta-modal__eyebrow">Android · Closed beta</p>
+    <h2 id="beta-modal-title">Install the Fud AI Android beta</h2>
+    <p class="beta-modal__sub">3 steps. The first one is required — Google checks Group membership before the opt-in URL works.</p>
+    <ol class="beta-modal__steps">
+      <li>
+        <span class="beta-modal__step-num">1</span>
+        <div class="beta-modal__step-body">
+          <h3>Join the Google Group</h3>
+          <p>Required prerequisite. Click "Join group" on the Google Groups page.</p>
+          <a href="https://groups.google.com/g/fud-ai-testers" target="_blank" rel="noopener" class="beta-modal__step-cta">
+            <i class="fa-solid fa-users"></i><span>Join Group</span>
+          </a>
+        </div>
+      </li>
+      <li>
+        <span class="beta-modal__step-num">2</span>
+        <div class="beta-modal__step-body">
+          <h3>Become a tester</h3>
+          <p>Open the opt-in URL, tap "Become a tester", and wait ~5 minutes for Google to provision your account.</p>
+          <a href="https://play.google.com/apps/testing/com.apoorvdarshan.calorietracker" target="_blank" rel="noopener" class="beta-modal__step-cta">
+            <i class="fa-solid fa-flask"></i><span>Become tester</span>
+          </a>
+        </div>
+      </li>
+      <li>
+        <span class="beta-modal__step-num">3</span>
+        <div class="beta-modal__step-body">
+          <h3>Install from Play Store</h3>
+          <p>Once provisioned, open the Play Store listing on your Android phone and install.</p>
+          <a href="https://play.google.com/store/apps/details?id=com.apoorvdarshan.calorietracker" target="_blank" rel="noopener" class="beta-modal__step-cta">
+            <i class="fa-brands fa-google-play"></i><span>Open Play Store</span>
+          </a>
+        </div>
+      </li>
+    </ol>
+    <p class="beta-modal__footnote">Stay opted-in for 14 days so the test qualifies for the public Play Store launch. Uninstalling the app is fine — just don't click <em>Leave the program</em>.</p>
+  </div>
+</div>
+
+<script>
+  // Wire up the "Join Android beta" CTA → beta modal. Click the CTA →
+  // intercept the navigation and open the modal. ESC + backdrop click +
+  // explicit × button close it. Body scroll is locked while open so the
+  // page underneath doesn't scroll under the modal on iOS Safari.
+  (function () {
+    const modal = document.getElementById('beta-modal');
+    if (!modal) return;
+    const openModal = (e) => {
+      if (e) e.preventDefault();
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    };
+    const closeModal = () => {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    };
+    document.querySelectorAll('[data-open-beta]').forEach((trigger) => {
+      trigger.addEventListener('click', openModal);
+    });
+    modal.querySelectorAll('[data-close-beta]').forEach((closer) => {
+      closer.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  })();
+</script>
+</body>
+</html>

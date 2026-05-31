@@ -1,0 +1,143 @@
+package com.apoorvdarshan.ai.widget
+
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.glance.GlanceId
+import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
+import androidx.glance.LocalSize
+import androidx.glance.action.actionStartActivity
+import androidx.glance.action.clickable
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.cornerRadius
+import androidx.glance.appwidget.provideContent
+import androidx.glance.background
+import androidx.glance.layout.Alignment
+import androidx.glance.layout.Box
+import androidx.glance.layout.Column
+import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
+import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
+import androidx.glance.layout.padding
+import androidx.glance.layout.width
+import androidx.glance.text.FontWeight
+import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
+import com.apoorvdarshan.ai.MainActivity
+import com.apoorvdarshan.ai.R
+import com.apoorvdarshan.ai.data.PreferencesStore
+import com.apoorvdarshan.ai.models.WidgetSnapshot
+import kotlinx.coroutines.flow.first
+
+class ProteinAppWidget : GlanceAppWidget() {
+
+    override val sizeMode: SizeMode = SizeMode.Responsive(
+        setOf(SMALL_SIZE, MEDIUM_SIZE)
+    )
+
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val prefs = PreferencesStore(context)
+        val snapshot = prefs.widgetSnapshot.first()
+            ?.takeUnless { it.isStale }
+            ?: WidgetSnapshot.empty()
+
+        provideContent {
+            GlanceTheme {
+                ProteinWidgetContent(snapshot)
+            }
+        }
+    }
+
+    companion object {
+        val SMALL_SIZE = DpSize(140.dp, 140.dp)
+        val MEDIUM_SIZE = DpSize(280.dp, 140.dp)
+    }
+}
+
+class ProteinWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget = ProteinAppWidget()
+}
+
+@Composable
+private fun ProteinWidgetContent(snapshot: WidgetSnapshot) {
+    val size = LocalSize.current
+    Box(
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .background(WidgetTheme.backgroundProvider)
+            .cornerRadius(22.dp)
+            .padding(14.dp)
+            .clickable(actionStartActivity<MainActivity>())
+    ) {
+        if (size.width < ProteinAppWidget.MEDIUM_SIZE.width) {
+            ProteinSmall(snapshot)
+        } else {
+            ProteinMedium(snapshot)
+        }
+    }
+}
+
+@Composable
+private fun ProteinSmall(snapshot: WidgetSnapshot) {
+    Column(modifier = GlanceModifier.fillMaxSize()) {
+        WidgetHeader(iconRes = R.drawable.ic_widget_bolt, label = "Protein")
+        Spacer(modifier = GlanceModifier.height(4.dp))
+        Box(
+            modifier = GlanceModifier.fillMaxWidth().defaultWeight(),
+            contentAlignment = Alignment.Center
+        ) {
+            RingWithCenter(
+                progress = snapshot.proteinProgress.toFloat(),
+                ringSizeDp = 92,
+                strokeDp = 9,
+                centerLarge = "${snapshot.protein}g",
+                centerSmall = "/ ${snapshot.proteinGoal}g"
+            )
+        }
+        Spacer(modifier = GlanceModifier.height(4.dp))
+        Text(
+            text = "${snapshot.proteinRemaining}g left",
+            style = TextStyle(
+                color = WidgetTheme.secondaryTextProvider,
+                fontWeight = FontWeight.Medium,
+                fontSize = 11.sp
+            )
+        )
+    }
+}
+
+@Composable
+private fun ProteinMedium(snapshot: WidgetSnapshot) {
+    Row(
+        modifier = GlanceModifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RingWithCenter(
+            progress = snapshot.proteinProgress.toFloat(),
+            ringSizeDp = 100,
+            strokeDp = 9,
+            centerLarge = snapshot.protein.toString(),
+            centerSmall = "/ ${snapshot.proteinGoal}",
+            centerCaption = "protein g"
+        )
+        Spacer(modifier = GlanceModifier.width(14.dp))
+        Column(
+            modifier = GlanceModifier.fillMaxHeight().defaultWeight(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CapsuleMacroRow("Calories", snapshot.calories.toInt(), snapshot.calorieGoal, snapshot.calorieProgress.toFloat(), unit = "")
+            Spacer(modifier = GlanceModifier.height(8.dp))
+            CapsuleMacroRow("Carbs", snapshot.carbs.toInt(), snapshot.carbsGoal, snapshot.carbsProgress.toFloat(), unit = "g")
+            Spacer(modifier = GlanceModifier.height(8.dp))
+            CapsuleMacroRow("Fat", snapshot.fat.toInt(), snapshot.fatGoal, snapshot.fatProgress.toFloat(), unit = "g")
+        }
+    }
+}

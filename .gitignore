@@ -1,0 +1,23 @@
+# Xcode
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+build/
+
+# Android Studio / Gradle
+.gradle/
+local.properties
+*.iml
+.idea/
+*.jks
+.cxx/
+
+# Secrets
+ios/calorietracker/Resources/Secrets.plist
+.DS_Store
+
+# Claude Code runtime
+.claude/
+ios/build-sim/
+.vercel

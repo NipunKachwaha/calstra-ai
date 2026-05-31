@@ -1,0 +1,435 @@
+package com.apoorvdarshan.ai.data
+
+import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.apoorvdarshan.ai.models.AIProvider
+import com.apoorvdarshan.ai.models.AutoBalanceMacro
+import com.apoorvdarshan.ai.models.BodyFatEntry
+import com.apoorvdarshan.ai.models.ChatMessage
+import com.apoorvdarshan.ai.models.FoodEntry
+import com.apoorvdarshan.ai.models.HomeTopNutrient
+import com.apoorvdarshan.ai.models.OptionalNutrientGoals
+import com.apoorvdarshan.ai.models.PendingFoodAnalysisDraft
+import com.apoorvdarshan.ai.models.SpeechLanguage
+import com.apoorvdarshan.ai.models.SpeechProvider
+import com.apoorvdarshan.ai.models.UserProfile
+import com.apoorvdarshan.ai.models.WeightEntry
+import com.apoorvdarshan.ai.models.WidgetSnapshot
+import com.apoorvdarshan.ai.ui.theme.AppThemeColor
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.SetSerializer
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
+
+val Context.fudaiDataStore by preferencesDataStore(name = "fudai_prefs")
+
+@Serializable
+private data class HealthEnergyGoalTargetSnapshot(
+    val customCalories: Int? = null,
+    val customProtein: Int? = null,
+    val customFat: Int? = null,
+    val customCarbs: Int? = null,
+    val autoBalanceMacro: AutoBalanceMacro? = null
+)
+
+/**
+ * Thin wrapper over DataStore Preferences for all app state except API keys
+ * (which live in [KeyStore]). Exposes reactive Flows for reads and suspend
+ * functions for writes. Complex values (profile, entries, history) are stored
+ * as JSON strings via kotlinx.serialization.
+ */
+class PreferencesStore(private val context: Context) {
+
+    private val json = Json { ignoreUnknownKeys = true }
+    private val ds get() = context.fudaiDataStore
+
+    // -- User profile -----------------------------------------------------
+    val userProfile: Flow<UserProfile?> = ds.data.map { prefs ->
+        prefs[Keys.USER_PROFILE]?.let { runCatching { json.decodeFromString<UserProfile>(it) }.getOrNull() }
+    }
+
+    suspend fun setUserProfile(profile: UserProfile) {
+        ds.edit { it[Keys.USER_PROFILE] = json.encodeToString(UserProfile.serializer(), profile) }
+    }
+
+    // -- Onboarding -------------------------------------------------------
+    val hasCompletedOnboarding: Flow<Boolean> = ds.data.map { it[Keys.ONBOARDING_COMPLETED] ?: false }
+    suspend fun setOnboardingCompleted(value: Boolean) {
+        ds.edit { it[Keys.ONBOARDING_COMPLETED] = value }
+    }
+
+    // -- Notifications ----------------------------------------------------
+    val notificationsEnabled: Flow<Boolean> = ds.data.map { it[Keys.NOTIFICATIONS_ENABLED] ?: false }
+    suspend fun setNotificationsEnabled(v: Boolean) { ds.edit { it[Keys.NOTIFICATIONS_ENABLED] = v } }
+
+    val streakReminderEnabled: Flow<Boolean> = ds.data.map { it[Keys.STREAK_ENABLED] ?: false }
+    suspend fun setStreakReminderEnabled(v: Boolean) { ds.edit { it[Keys.STREAK_ENABLED] = v } }
+
+    val streakReminderHour: Flow<Int> = ds.data.map { it[Keys.STREAK_HOUR] ?: 19 }
+    suspend fun setStreakReminderHour(v: Int) { ds.edit { it[Keys.STREAK_HOUR] = v } }
+
+    val streakReminderMinute: Flow<Int> = ds.data.map { it[Keys.STREAK_MINUTE] ?: 0 }
+    suspend fun setStreakReminderMinute(v: Int) { ds.edit { it[Keys.STREAK_MINUTE] = v } }
+
+    val dailySummaryEnabled: Flow<Boolean> = ds.data.map { it[Keys.DAILY_ENABLED] ?: false }
+    suspend fun setDailySummaryEnabled(v: Boolean) { ds.edit { it[Keys.DAILY_ENABLED] = v } }
+
+    val dailySummaryHour: Flow<Int> = ds.data.map { it[Keys.DAILY_HOUR] ?: 21 }
+    suspend fun setDailySummaryHour(v: Int) { ds.edit { it[Keys.DAILY_HOUR] = v } }
+
+    val dailySummaryMinute: Flow<Int> = ds.data.map { it[Keys.DAILY_MINUTE] ?: 0 }
+    suspend fun setDailySummaryMinute(v: Int) { ds.edit { it[Keys.DAILY_MINUTE] = v } }
+
+    val weightReminderEnabled: Flow<Boolean> = ds.data.map { it[Keys.WEIGHT_REMINDER_ENABLED] ?: true }
+    suspend fun setWeightReminderEnabled(v: Boolean) { ds.edit { it[Keys.WEIGHT_REMINDER_ENABLED] = v } }
+
+    val bodyFatReminderEnabled: Flow<Boolean> = ds.data.map { it[Keys.BODY_FAT_REMINDER_ENABLED] ?: true }
+    suspend fun setBodyFatReminderEnabled(v: Boolean) { ds.edit { it[Keys.BODY_FAT_REMINDER_ENABLED] = v } }
+
+    val goalReachedNotificationsEnabled: Flow<Boolean> = ds.data.map { it[Keys.GOAL_REACHED_NOTIFICATIONS_ENABLED] ?: true }
+    suspend fun setGoalReachedNotificationsEnabled(v: Boolean) { ds.edit { it[Keys.GOAL_REACHED_NOTIFICATIONS_ENABLED] = v } }
+
+    // -- Health Connect ---------------------------------------------------
+    val healthConnectEnabled: Flow<Boolean> = ds.data.map { it[Keys.HEALTH_CONNECT_ENABLED] ?: false }
+    suspend fun setHealthConnectEnabled(v: Boolean) { ds.edit { it[Keys.HEALTH_CONNECT_ENABLED] = v } }
+
+    val healthPermissionsVersion: Flow<Int> = ds.data.map { it[Keys.HEALTH_TYPES_VERSION] ?: 0 }
+    suspend fun setHealthPermissionsVersion(v: Int) { ds.edit { it[Keys.HEALTH_TYPES_VERSION] = v } }
+
+    val healthEnergyGoalsEnabled: Flow<Boolean> = ds.data.map { it[Keys.HEALTH_ENERGY_GOALS_ENABLED] ?: false }
+    suspend fun setHealthEnergyGoalsEnabled(v: Boolean) { ds.edit { it[Keys.HEALTH_ENERGY_GOALS_ENABLED] = v } }
+
+    suspend fun saveHealthEnergyGoalPreviousTargetsIfNeeded(profile: UserProfile) {
+        ds.edit { prefs ->
+            if (prefs[Keys.HEALTH_ENERGY_GOALS_PREVIOUS_TARGETS] != null) return@edit
+            val snapshot = HealthEnergyGoalTargetSnapshot(
+                customCalories = profile.customCalories,
+                customProtein = profile.customProtein,
+                customFat = profile.customFat,
+                customCarbs = profile.customCarbs,
+                autoBalanceMacro = profile.autoBalanceMacro
+            )
+            prefs[Keys.HEALTH_ENERGY_GOALS_PREVIOUS_TARGETS] =
+                json.encodeToString(HealthEnergyGoalTargetSnapshot.serializer(), snapshot)
+        }
+    }
+
+    suspend fun restoreHealthEnergyGoalPreviousTargets(profile: UserProfile): UserProfile {
+        val snapshot = ds.data.first()[Keys.HEALTH_ENERGY_GOALS_PREVIOUS_TARGETS]
+            ?.let { runCatching { json.decodeFromString<HealthEnergyGoalTargetSnapshot>(it) }.getOrNull() }
+        return if (snapshot == null) {
+            profile.copy(
+                customCalories = null,
+                customProtein = null,
+                customFat = null,
+                customCarbs = null,
+                autoBalanceMacro = null
+            )
+        } else {
+            profile.copy(
+                customCalories = snapshot.customCalories,
+                customProtein = snapshot.customProtein,
+                customFat = snapshot.customFat,
+                customCarbs = snapshot.customCarbs,
+                autoBalanceMacro = snapshot.autoBalanceMacro
+            )
+        }
+    }
+
+    suspend fun clearHealthEnergyGoalPreviousTargets() {
+        ds.edit { it.remove(Keys.HEALTH_ENERGY_GOALS_PREVIOUS_TARGETS) }
+    }
+
+    // -- Units ------------------------------------------------------------
+    val useMetric: Flow<Boolean> = ds.data.map { it[Keys.USE_METRIC] ?: true }
+    suspend fun setUseMetric(v: Boolean) { ds.edit { it[Keys.USE_METRIC] = v } }
+
+    val preferGramsByDefault: Flow<Boolean> = ds.data.map { it[Keys.PREFER_GRAMS_BY_DEFAULT] ?: false }
+    suspend fun setPreferGramsByDefault(v: Boolean) { ds.edit { it[Keys.PREFER_GRAMS_BY_DEFAULT] = v } }
+
+    /** "system" | "light" | "dark". Mirrors iOS @AppStorage("appearanceMode"). */
+    val appearanceMode: Flow<String> = ds.data.map { it[Keys.APPEARANCE_MODE] ?: "system" }
+    suspend fun setAppearanceMode(v: String) { ds.edit { it[Keys.APPEARANCE_MODE] = v } }
+
+    /** Mirrors iOS @AppStorage("appThemeColor"). */
+    val appThemeColor: Flow<String> = ds.data.map { it[Keys.APP_THEME_COLOR] ?: AppThemeColor.DEFAULT_KEY }
+    suspend fun setAppThemeColor(v: String) { ds.edit { it[Keys.APP_THEME_COLOR] = v } }
+
+    /** false = Sunday, true = Monday. Mirrors iOS @AppStorage("weekStartsOnMonday"). */
+    val weekStartsOnMonday: Flow<Boolean> = ds.data.map { it[Keys.WEEK_STARTS_MONDAY] ?: false }
+    suspend fun setWeekStartsOnMonday(v: Boolean) { ds.edit { it[Keys.WEEK_STARTS_MONDAY] = v } }
+
+    /** "RECENTS" | "FREQUENT" | "FAVORITES". Mirrors iOS @AppStorage("lastRecentsSegment"). */
+    val lastSavedMealsSegment: Flow<String> = ds.data.map { it[Keys.LAST_SAVED_MEALS_SEGMENT] ?: "RECENTS" }
+    suspend fun setLastSavedMealsSegment(v: String) { ds.edit { it[Keys.LAST_SAVED_MEALS_SEGMENT] = v } }
+
+    /** "standard" | "latestMealsFirst". Mirrors iOS @AppStorage("foodLogSortOrder"). */
+    val foodLogSortOrder: Flow<String> = ds.data.map { it[Keys.FOOD_LOG_SORT_ORDER] ?: "standard" }
+    suspend fun setFoodLogSortOrder(v: String) { ds.edit { it[Keys.FOOD_LOG_SORT_ORDER] = v } }
+
+    /** Comma-separated [HomeTopNutrient.storageKey] values for the three home nutrient cards. */
+    val homeTopNutrients: Flow<String> = ds.data.map {
+        it[Keys.HOME_TOP_NUTRIENTS] ?: HomeTopNutrient.DefaultStorageValue
+    }
+    suspend fun setHomeTopNutrients(v: String) {
+        ds.edit { it[Keys.HOME_TOP_NUTRIENTS] = v }
+    }
+
+    /** Goals for nutrients outside the calorie/protein/carb/fat calculator. */
+    val optionalNutrientGoals: Flow<OptionalNutrientGoals> = ds.data.map { prefs ->
+        prefs[Keys.OPTIONAL_NUTRIENT_GOALS]?.let {
+            runCatching { json.decodeFromString<OptionalNutrientGoals>(it) }.getOrNull()
+        } ?: OptionalNutrientGoals.Default
+    }
+    suspend fun setOptionalNutrientGoals(goals: OptionalNutrientGoals) {
+        ds.edit {
+            it[Keys.OPTIONAL_NUTRIENT_GOALS] =
+                json.encodeToString(OptionalNutrientGoals.serializer(), goals)
+        }
+    }
+
+    // -- AI Provider selection --------------------------------------------
+    val selectedAIProvider: Flow<AIProvider> = ds.data.map {
+        val raw = it[Keys.SELECTED_AI_PROVIDER]
+        AIProvider.values().firstOrNull { p -> p.name == raw } ?: AIProvider.GEMINI
+    }
+    suspend fun setSelectedAIProvider(p: AIProvider) {
+        ds.edit { it[Keys.SELECTED_AI_PROVIDER] = p.name }
+    }
+
+    val selectedAIModel: Flow<String?> = ds.data.map { it[Keys.SELECTED_AI_MODEL] }
+    suspend fun setSelectedAIModel(model: String) {
+        ds.edit { it[Keys.SELECTED_AI_MODEL] = AIProvider.normalizeModelId(model) }
+    }
+
+    fun customBaseUrl(provider: AIProvider): Flow<String?> = ds.data.map {
+        it[stringPreferencesKey(CUSTOM_BASE_URL_PREFIX + provider.name)]
+    }
+
+    suspend fun setCustomBaseUrl(provider: AIProvider, url: String?) {
+        val key = stringPreferencesKey(CUSTOM_BASE_URL_PREFIX + provider.name)
+        ds.edit {
+            if (url.isNullOrEmpty()) it.remove(key) else it[key] = url
+        }
+    }
+
+    // -- Custom AI Instructions ------------------------------------------
+    /** Free-form text appended to every AI request. Empty = disabled. */
+    val userContext: Flow<String> = ds.data.map { it[Keys.USER_CONTEXT].orEmpty() }
+    suspend fun setUserContext(value: String) {
+        val trimmed = value.trim()
+        ds.edit {
+            if (trimmed.isEmpty()) it.remove(Keys.USER_CONTEXT) else it[Keys.USER_CONTEXT] = trimmed
+        }
+    }
+
+    // -- Fallback AI Provider --------------------------------------------
+    val fallbackEnabled: Flow<Boolean> = ds.data.map { it[Keys.FALLBACK_ENABLED] ?: false }
+    suspend fun setFallbackEnabled(v: Boolean) { ds.edit { it[Keys.FALLBACK_ENABLED] = v } }
+
+    val selectedFallbackProvider: Flow<AIProvider> = ds.data.map {
+        val raw = it[Keys.FALLBACK_PROVIDER]
+        AIProvider.values().firstOrNull { p -> p.name == raw } ?: AIProvider.GEMINI
+    }
+    suspend fun setSelectedFallbackProvider(p: AIProvider) {
+        ds.edit { it[Keys.FALLBACK_PROVIDER] = p.name }
+    }
+
+    val selectedFallbackModel: Flow<String?> = ds.data.map { it[Keys.FALLBACK_MODEL] }
+    suspend fun setSelectedFallbackModel(model: String) {
+        ds.edit { it[Keys.FALLBACK_MODEL] = AIProvider.normalizeModelId(model) }
+    }
+
+    // -- Speech Provider selection ---------------------------------------
+    val selectedSpeechProvider: Flow<SpeechProvider> = ds.data.map {
+        val raw = it[Keys.SELECTED_SPEECH_PROVIDER]
+        SpeechProvider.values().firstOrNull { p -> p.name == raw } ?: SpeechProvider.NATIVE
+    }
+    suspend fun setSelectedSpeechProvider(p: SpeechProvider) {
+        ds.edit { it[Keys.SELECTED_SPEECH_PROVIDER] = p.name }
+    }
+
+    fun selectedSpeechLanguage(provider: SpeechProvider): Flow<SpeechLanguage> = ds.data.map {
+        val raw = it[Keys.selectedSpeechLanguage(provider)]
+        SpeechLanguage.values().firstOrNull { language -> language.name == raw }
+            ?: SpeechLanguage.defaultFor(provider)
+    }
+
+    suspend fun setSelectedSpeechLanguage(provider: SpeechProvider, language: SpeechLanguage) {
+        ds.edit { it[Keys.selectedSpeechLanguage(provider)] = language.name }
+    }
+
+    // -- Food entries -----------------------------------------------------
+    val foodEntries: Flow<List<FoodEntry>> = ds.data.map { prefs ->
+        prefs[Keys.FOOD_ENTRIES]?.let {
+            runCatching { json.decodeFromString(ListSerializer(FoodEntry.serializer()), it) }.getOrNull()
+        } ?: emptyList()
+    }
+
+    suspend fun setFoodEntries(entries: List<FoodEntry>) {
+        ds.edit { it[Keys.FOOD_ENTRIES] = json.encodeToString(ListSerializer(FoodEntry.serializer()), entries) }
+    }
+
+    val favoriteKeys: Flow<Set<String>> = ds.data.map { prefs ->
+        prefs[Keys.FAVORITE_KEYS]?.let {
+            runCatching { json.decodeFromString(SetSerializer(String.serializer()), it) }.getOrNull()
+        } ?: emptySet()
+    }
+
+    suspend fun setFavoriteKeys(keys: Set<String>) {
+        ds.edit { it[Keys.FAVORITE_KEYS] = json.encodeToString(SetSerializer(String.serializer()), keys) }
+    }
+
+    /**
+     * Ordered list of favorite FoodEntry copies — mirrors iOS UserDefaults
+     * key "favoriteFoodEntries". Stored as a separate copy (not a reference
+     * into [foodEntries]) so a favorite survives deletion of the original
+     * log entry, AND so user-defined order is preserved across restarts.
+     */
+    val favoriteFoodEntries: Flow<List<FoodEntry>> = ds.data.map { prefs ->
+        prefs[Keys.FAVORITE_ENTRIES]?.let {
+            runCatching { json.decodeFromString(ListSerializer(FoodEntry.serializer()), it) }.getOrNull()
+        } ?: emptyList()
+    }
+
+    suspend fun setFavoriteFoodEntries(entries: List<FoodEntry>) {
+        ds.edit { it[Keys.FAVORITE_ENTRIES] = json.encodeToString(ListSerializer(FoodEntry.serializer()), entries) }
+    }
+
+    // -- Pending food analysis draft --------------------------------------
+    val pendingFoodAnalysisDraft: Flow<PendingFoodAnalysisDraft?> = ds.data.map { prefs ->
+        prefs[Keys.PENDING_FOOD_ANALYSIS_DRAFT]?.let {
+            runCatching { json.decodeFromString<PendingFoodAnalysisDraft>(it) }.getOrNull()
+        }
+    }
+
+    suspend fun setPendingFoodAnalysisDraft(draft: PendingFoodAnalysisDraft?) {
+        ds.edit {
+            if (draft == null) {
+                it.remove(Keys.PENDING_FOOD_ANALYSIS_DRAFT)
+            } else {
+                it[Keys.PENDING_FOOD_ANALYSIS_DRAFT] = json.encodeToString(PendingFoodAnalysisDraft.serializer(), draft)
+            }
+        }
+    }
+
+    // -- Weight entries ---------------------------------------------------
+    val weightEntries: Flow<List<WeightEntry>> = ds.data.map { prefs ->
+        prefs[Keys.WEIGHT_ENTRIES]?.let {
+            runCatching { json.decodeFromString(ListSerializer(WeightEntry.serializer()), it) }.getOrNull()
+        } ?: emptyList()
+    }
+
+    suspend fun setWeightEntries(entries: List<WeightEntry>) {
+        ds.edit { it[Keys.WEIGHT_ENTRIES] = json.encodeToString(ListSerializer(WeightEntry.serializer()), entries) }
+    }
+
+    // -- Body fat entries --------------------------------------------------
+    val bodyFatEntries: Flow<List<BodyFatEntry>> = ds.data.map { prefs ->
+        prefs[Keys.BODY_FAT_ENTRIES]?.let {
+            runCatching { json.decodeFromString(ListSerializer(BodyFatEntry.serializer()), it) }.getOrNull()
+        } ?: emptyList()
+    }
+
+    suspend fun setBodyFatEntries(entries: List<BodyFatEntry>) {
+        ds.edit { it[Keys.BODY_FAT_ENTRIES] = json.encodeToString(ListSerializer(BodyFatEntry.serializer()), entries) }
+    }
+
+    // -- Coach chat history ----------------------------------------------
+    val chatHistory: Flow<List<ChatMessage>> = ds.data.map { prefs ->
+        prefs[Keys.CHAT_HISTORY]?.let {
+            runCatching { json.decodeFromString(ListSerializer(ChatMessage.serializer()), it) }.getOrNull()
+        } ?: emptyList()
+    }
+
+    suspend fun setChatHistory(history: List<ChatMessage>) {
+        ds.edit { it[Keys.CHAT_HISTORY] = json.encodeToString(ListSerializer(ChatMessage.serializer()), history) }
+    }
+
+    // -- Widget snapshot --------------------------------------------------
+    val widgetSnapshot: Flow<WidgetSnapshot?> = ds.data.map { prefs ->
+        prefs[Keys.WIDGET_SNAPSHOT]?.let {
+            runCatching { json.decodeFromString<WidgetSnapshot>(it) }.getOrNull()
+        }
+    }
+
+    suspend fun setWidgetSnapshot(snapshot: WidgetSnapshot) {
+        ds.edit { it[Keys.WIDGET_SNAPSHOT] = json.encodeToString(WidgetSnapshot.serializer(), snapshot) }
+    }
+
+    suspend fun clearWidgetSnapshot() {
+        ds.edit { it.remove(Keys.WIDGET_SNAPSHOT) }
+    }
+
+    // -- Test data backup (used by TestDataSeeder during dev seeding) -------
+    val testSeedBackupJson: Flow<String?> = ds.data.map { it[Keys.TEST_SEED_BACKUP] }
+    suspend fun setTestSeedBackupJson(json: String) {
+        ds.edit { it[Keys.TEST_SEED_BACKUP] = json }
+    }
+    suspend fun clearTestSeedBackup() {
+        ds.edit { it.remove(Keys.TEST_SEED_BACKUP) }
+    }
+
+    // -- Wipe everything --------------------------------------------------
+    suspend fun clearAll() {
+        ds.edit { it.clear() }
+    }
+
+    private object Keys {
+        val USER_PROFILE = stringPreferencesKey("userProfile")
+        val ONBOARDING_COMPLETED = booleanPreferencesKey("hasCompletedOnboarding")
+        val NOTIFICATIONS_ENABLED = booleanPreferencesKey("notificationsEnabled")
+        val STREAK_ENABLED = booleanPreferencesKey("streakReminderEnabled")
+        val STREAK_HOUR = intPreferencesKey("streakReminderHour")
+        val STREAK_MINUTE = intPreferencesKey("streakReminderMinute")
+        val DAILY_ENABLED = booleanPreferencesKey("dailySummaryEnabled")
+        val DAILY_HOUR = intPreferencesKey("dailySummaryHour")
+        val DAILY_MINUTE = intPreferencesKey("dailySummaryMinute")
+        val WEIGHT_REMINDER_ENABLED = booleanPreferencesKey("weightReminderEnabled")
+        val BODY_FAT_REMINDER_ENABLED = booleanPreferencesKey("bodyFatReminderEnabled")
+        val GOAL_REACHED_NOTIFICATIONS_ENABLED = booleanPreferencesKey("goalReachedNotificationsEnabled")
+        val HEALTH_CONNECT_ENABLED = booleanPreferencesKey("healthConnectEnabled")
+        val HEALTH_TYPES_VERSION = intPreferencesKey("healthTypesVersion")
+        val HEALTH_ENERGY_GOALS_ENABLED = booleanPreferencesKey("healthEnergyGoalsEnabled")
+        val HEALTH_ENERGY_GOALS_PREVIOUS_TARGETS = stringPreferencesKey("healthEnergyGoalsPreviousTargets")
+        val USE_METRIC = booleanPreferencesKey("useMetric")
+        val PREFER_GRAMS_BY_DEFAULT = booleanPreferencesKey("foodMeasurementPreferGramsByDefault")
+        val APPEARANCE_MODE = stringPreferencesKey("appearanceMode")
+        val APP_THEME_COLOR = stringPreferencesKey("appThemeColor")
+        val WEEK_STARTS_MONDAY = booleanPreferencesKey("weekStartsOnMonday")
+        val LAST_SAVED_MEALS_SEGMENT = stringPreferencesKey("lastRecentsSegment")
+        val FOOD_LOG_SORT_ORDER = stringPreferencesKey("foodLogSortOrder")
+        val HOME_TOP_NUTRIENTS = stringPreferencesKey("homeTopNutrients")
+        val OPTIONAL_NUTRIENT_GOALS = stringPreferencesKey("optionalNutrientGoals")
+        val SELECTED_AI_PROVIDER = stringPreferencesKey("selectedAIProvider")
+        val SELECTED_AI_MODEL = stringPreferencesKey("selectedAIModel")
+        val USER_CONTEXT = stringPreferencesKey("userContext")
+        val FALLBACK_ENABLED = booleanPreferencesKey("aiFallbackEnabled")
+        val FALLBACK_PROVIDER = stringPreferencesKey("selectedFallbackAIProvider")
+        val FALLBACK_MODEL = stringPreferencesKey("selectedFallbackAIModel")
+        val SELECTED_SPEECH_PROVIDER = stringPreferencesKey("selectedSpeechProvider")
+        fun selectedSpeechLanguage(provider: SpeechProvider) =
+            stringPreferencesKey("selectedSpeechLanguage_${provider.name}")
+        val FOOD_ENTRIES = stringPreferencesKey("foodEntries")
+        val FAVORITE_KEYS = stringPreferencesKey("favorites")
+        val FAVORITE_ENTRIES = stringPreferencesKey("favoriteFoodEntries")
+        val PENDING_FOOD_ANALYSIS_DRAFT = stringPreferencesKey("pendingFoodAnalysisDraft")
+        val WEIGHT_ENTRIES = stringPreferencesKey("weightEntries")
+        val BODY_FAT_ENTRIES = stringPreferencesKey("bodyFatEntries")
+        val CHAT_HISTORY = stringPreferencesKey("coachChatHistory")
+        val WIDGET_SNAPSHOT = stringPreferencesKey("widget_snapshot_v1")
+        val TEST_SEED_BACKUP = stringPreferencesKey("test_seed_backup_v1")
+    }
+
+    companion object {
+        private const val CUSTOM_BASE_URL_PREFIX = "customBaseURL_"
+    }
+}
