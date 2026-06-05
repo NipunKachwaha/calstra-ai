@@ -342,4 +342,4 @@ Fud AI is fully free, open source, and privacy-first. If it helps you, consider 
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?logo=kofi)](https://ko-fi.com/)
 [![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Vote-orange?logo=producthunt)](https://www.producthunt.com/products/calstra-ai-calorie-tracker)
 
-You can also help by [voting on Product Hunt](https://www.producthunt.com/products/calstra-ai-calorie-tracker), [starring the repo](https://github.com/apoorvdarshan/fud-ai), [filing bugs](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20), or [requesting features](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&title=Feature:%20).
+You can also help by [voting on Product Hunt](https://www.producthunt.com/products/calstra-ai-calorie-tracker), [starring the repo](https://github.com/NipunKachwaha/calstra-ai), [filing bugs](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20), or [requesting features](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=enhancement&title=Feature:%20).
