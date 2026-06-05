@@ -280,7 +280,7 @@ ios/
 
 ```bash
 # Clone
-git clone https://github.com/apoorvdarshan/fud-ai.git
+git clone https://github.com/NipunKachwaha/calstra-ai.git
 cd fud-ai
 ```
 
@@ -330,7 +330,7 @@ MIT License. See [LICENSE](LICENSE).
 
 - **Developer:** Nipun Kachwaha
 - **Email:** 
-- **Follow on X:** [@apoorvdarshan](https://x.com/desireofrana)
+- **Follow on X:** [@desireofrana](https://x.com/desireofrana)
 - **Follow on Instagram:** [@calstrai.app](https://www.instagram.com/calstrai.app/)
 - **Report an Issue:** [github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20)
 - **Request a Feature:** [github.com/NipunKachwaha/calstra-ai/issues/new?labels=enhancement&title=Feature:%20](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=enhancement&title=Feature:%20)
