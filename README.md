@@ -316,11 +316,11 @@ Adding a new translation? Open `ios/calorietracker/Localizable.xcstrings` in Xco
 
 ## Security
 
-See [SECURITY.md](SECURITY.md). Use [private vulnerability reporting](https://github.com/apoorvdarshan/fud-ai/security/advisories/new) for sensitive issues.
+See [SECURITY.md](SECURITY.md). Use [private vulnerability reporting](https://github.com/NipunKachwaha/calstra-ai/security/advisories/new) for sensitive issues.
 
 ## Privacy
 
-No accounts, no cloud sync, no analytics. BYOK API keys are encrypted on-device and requests go directly to the provider you choose. Barcode lookup sends the scanned barcode to Open Food Facts and stores the returned nutrition locally. Fud AI Plus sends only the active AI/STT request through the proxy for processing and quota enforcement: Gemini for food/Coach and Deepgram for voice. Optional nutrient goals and Home nutrient-card choices are local preferences; AI estimation sends only the profile context needed for that one estimate. **Delete All Data** is local-only — it wipes the app's storage (food log, weight log, profile, Coach chat, API keys, widget snapshot) but never touches Apple Health or Health Connect. Samples you've synced are yours; if you want them cleaned up, do it from Health / Health Connect settings. See [Privacy Policy](https://fud-ai.app/privacy.html).
+No accounts, no cloud sync, no analytics. BYOK API keys are encrypted on-device and requests go directly to the provider you choose. Barcode lookup sends the scanned barcode to Open Food Facts and stores the returned nutrition locally. Fud AI Plus sends only the active AI/STT request through the proxy for processing and quota enforcement: Gemini for food/Coach and Deepgram for voice. Optional nutrient goals and Home nutrient-card choices are local preferences; AI estimation sends only the profile context needed for that one estimate. **Delete All Data** is local-only — it wipes the app's storage (food log, weight log, profile, Coach chat, API keys, widget snapshot) but never touches Apple Health or Health Connect. Samples you've synced are yours; if you want them cleaned up, do it from Health / Health Connect settings. See [Privacy Policy](https://calstra-ai.app/privacy.html).
 
 ## License
 
@@ -328,26 +328,18 @@ MIT License. See [LICENSE](LICENSE).
 
 ## Contact
 
-- **Developer:** Apoorv Darshan
-- **Email:** apoorv@fud-ai.app or ad13dtu@gmail.com
-- **Follow on X:** [@apoorvdarshan](https://x.com/apoorvdarshan)
-- **Follow on Instagram:** [@fudai.app](https://www.instagram.com/fudai.app/)
-- **Report an Issue:** [github.com/apoorvdarshan/fud-ai/issues/new?labels=bug&title=Bug:%20](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=bug&title=Bug:%20)
-- **Request a Feature:** [github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&title=Feature:%20](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&title=Feature:%20)
+- **Developer:** Nipun Kachwaha
+- **Email:** 
+- **Follow on X:** [@apoorvdarshan](https://x.com/desireofrana)
+- **Follow on Instagram:** [@calstrai.app](https://www.instagram.com/calstrai.app/)
+- **Report an Issue:** [github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20)
+- **Request a Feature:** [github.com/NipunKachwaha/calstra-ai/issues/new?labels=enhancement&title=Feature:%20](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=enhancement&title=Feature:%20)
 
 ## Support the Project
 
 Fud AI is fully free, open source, and privacy-first. If it helps you, consider supporting development — every bit keeps this project alive.
 
-[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?logo=kofi)](https://ko-fi.com/apoorvdarshan)
-[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Vote-orange?logo=producthunt)](https://www.producthunt.com/products/fud-ai-calorie-tracker)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-ff5e5b?logo=kofi)](https://ko-fi.com/)
+[![Product Hunt](https://img.shields.io/badge/Product%20Hunt-Vote-orange?logo=producthunt)](https://www.producthunt.com/products/calstra-ai-calorie-tracker)
 
-You can also help by [voting on Product Hunt](https://www.producthunt.com/products/fud-ai-calorie-tracker), [starring the repo](https://github.com/apoorvdarshan/fud-ai), [filing bugs](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=bug&title=Bug:%20), or [requesting features](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&title=Feature:%20).
-
-## Contributors
-
-Thanks to everyone who has contributed to making Fud AI better:
-
-<a href="https://github.com/apoorvdarshan/fud-ai/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=apoorvdarshan/fud-ai&amp;max=100&amp;columns=12" alt="Contributors" />
-</a>
+You can also help by [voting on Product Hunt](https://www.producthunt.com/products/calstra-ai-calorie-tracker), [starring the repo](https://github.com/apoorvdarshan/fud-ai), [filing bugs](https://github.com/NipunKachwaha/calstra-ai/issues/new?labels=bug&title=Bug:%20), or [requesting features](https://github.com/apoorvdarshan/fud-ai/issues/new?labels=enhancement&title=Feature:%20).
